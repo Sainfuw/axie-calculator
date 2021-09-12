@@ -4,9 +4,9 @@ import { AxieEnemyContainer } from "./AxieEnemyContainer";
 export const EnemyPanel = () => {
   return (
     <div className="panels">
-      <AxieEnemyContainer />
-      <AxieEnemyContainer />
-      <AxieEnemyContainer />
+      <AxieEnemyContainer position={"front"} />
+      <AxieEnemyContainer position={"middle"} />
+      <AxieEnemyContainer position={"back"} />
     </div>
   );
 };

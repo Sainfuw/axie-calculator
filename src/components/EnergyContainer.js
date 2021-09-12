@@ -10,7 +10,7 @@ export const EnergyContainer = () => {
         <span style={{ marginBottom: "13px" }}>-</span>
       </button>
       <div className="energy-display">
-        <span style={{ marginBottom: "0px" }}>{axieState.energyEnemy}</span>
+        <span style={{ marginBottom: "2px" }}>{axieState.energyEnemy}</span>
       </div>
       <button className="circle-control" onClick={() => addEnergy(1)}>
         <span style={{ marginBottom: "10px" }}>+</span>
