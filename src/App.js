@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { AxieProvider } from "./context/AxieContext";
 
-function App() {
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { HistoryLeft } from "./components/HistoryLeft";
+import { Main } from "./components/Main";
+import { HistoryRight } from "./components/HistoryRight";
+
+const AppState = ({ children }) => {
+  return <AxieProvider>{children}</AxieProvider>;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppState>
+      <div className="App main-container">
+        <HistoryLeft />
+        <Main />
+        <HistoryRight />
+      </div>
+    </AppState>
   );
-}
+};
 
 export default App;

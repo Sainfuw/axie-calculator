@@ -1,13 +1,231 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html, body, #root {
+	height: 100vh;
+  --main-bgcolor: #121212;
+  background-color: var(--main-bgcolor);
+  /* background-image: url(./images/background_general.png); */
+  /* background-size: cover; */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  height: "100%";
+}
+
+.main {
+  flex: 80%;
+  height: 100vh;
+}
+
+.panels {
+  display: flex;
+  height: 40vh;
+}
+
+.history {
+  display: flex;
+  flex: 10%;
+  width: 100%;
+  height: 100vh;
+}
+
+.axie-logo {
+  width: 100%;
+  background-image: url(./images/axielogo.png);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
+  height: 15%;
+}
+
+.counter-elements {
+  width: 100%;
+  background-image: url(./images/counter-elements.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: bottom;
+  height: 95%;
+}
+
+.info-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 20vh;
+}
+
+.axie-container {
+  display: flex;
+  flex-direction: column;
+  margin: 3px;
+  width: 100%;
+}
+
+.axie-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #242735;
+  border: 1px solid #3A3F50;
+  border-radius: 20px;
+}
+
+.axie-info {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.axie-stats {
+  display:  flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 25%;
+}
+
+.axie-type-image {
+  min-width: 50%;
+}
+
+.axie-options {
+  display: flex;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  justify-content: center;
+}
+
+.player {
+  align-items: flex-start;
+}
+
+.enemy {
+  align-items: flex-end;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+}
+
+.custom-card {
+}
+
+.axie-image {
+  width: 100px;
+  height: 100px;
+  background-image: url(./images/axiebackground.png);
+  background-size: cover;
+}
+
+.enemy-select-axie {
+  width: 250px;
+}
+
+.button-restart {
+  padding: 10px;
+  align-self: flex-end;
+  margin: 10px;
+}
+
+.energy-container {
+  width: 230px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.circle-control {
+  display: flex;
+  font-weight:bold;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(92, 92, 92, 1);
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  font-weight: bold;
+  background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+  background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+}
+
+.circle-control:active {
+    background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: none;
+}
+
+.energy-display {
+	cursor:pointer;
+  display: flex;
+  font-weight:bold;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  /* background-image: url(./images/energia.png); */
+	background-color:#ffc477;
+	box-shadow:
+    inset 5px 1px 5px 5px #CC9C5F,
+    inset 10px -5px 0px -5px #fce2c1;
+  background-size: cover;
+  font-size: 100px;
+  color: wheat;
+	/* text-shadow: 2px 2px 0px #000; */
+  /* text-shadow: -10px -10px 0px rgba(255, 255, 255, 0.3), 10px 10px 0px rgba(0, 0, 0, 0.8); */
+  font-size: 70px;
+  font-family: Helvetica;
+  color: #FFFFFF;
+  text-shadow:0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15); 
+  text-align:center; 
+  line-height:250px;
+}
+
+.badges-stats-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.badge-stats {
+  display: inline;
+  padding-left: 15px;
+} 
+
+.bg-purple {
+  color: white;
+  background-color: purple;
+  margin-left: -4px;
+}
+
+.health-color {
+  color: palegreen;
+}
+
+.speed-color {
+  color: palegoldenrod;
+}
+
+.skill-color {
+  padding: 7px;
+  color: palevioletred;
+}
+
+.morale-color {
+  color: lightsalmon;
 }
