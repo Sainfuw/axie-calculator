@@ -15,9 +15,9 @@ export const Card = ({ position, card }) => {
     if (position === "front") {
       setAxie(enemyOne);
     } else if (position === "middle") {
-      setAxie(enemyOne);
+      setAxie(enemyTwo);
     } else if (position === "back") {
-      setAxie(enemyOne);
+      setAxie(enemyThree);
     }
   }, [enemyOne, enemyTwo, enemyThree, position]);
 
