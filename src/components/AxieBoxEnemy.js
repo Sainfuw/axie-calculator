@@ -5,7 +5,7 @@ import { getOwnerAxies } from "../api/queries";
 export const AxieBoxEnemy = ({ position }) => {
   const { axieState, addEnemieOne, fillOtherAxies } = useContext(AxieContext);
   const [enemyAxieId, setEnemyAxieId] = useState("");
-  const [axie, setAxie] = useState("");
+  const [axie, setAxie] = useState(null);
 
   const {
     enemies: { enemyOne, enemyTwo, enemyThree },

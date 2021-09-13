@@ -115,13 +115,12 @@ html, body, #root {
 }
 
 .custom-card {
+  border-radius: 8px;
 }
 
 .axie-image {
   width: 100px;
   height: 100px;
-  background-image: url(./images/axiebackground.png);
-  background-size: cover;
 }
 
 .enemy-select-axie {
