@@ -3,7 +3,8 @@ import { AxieContext } from "../context/AxieContext";
 import { getOwnerAxies } from "../api/queries";
 
 export const AxieBoxEnemy = ({ position }) => {
-  const { axieState, addEnemieOne, fillOtherAxies } = useContext(AxieContext);
+  const { axieState, addEnemieOne, fillOtherAxies, setEnemyFocused } =
+    useContext(AxieContext);
   const [enemyAxieId, setEnemyAxieId] = useState("");
   const [axie, setAxie] = useState(null);
 
@@ -31,6 +32,10 @@ export const AxieBoxEnemy = ({ position }) => {
     res && getEnemyAxies(res.owner, res.id);
   };
 
+  const handleAxieClicked = () => {
+    setEnemyFocused({ id: axie.id, class: axie.class });
+  };
+
   const getEnemyAxies = async (ownerId, id) => {
     const res = await getOwnerAxies(ownerId);
     const axiesArray = res.filter((axie) => axie.id !== id);
@@ -43,7 +48,14 @@ export const AxieBoxEnemy = ({ position }) => {
   };
 
   return (
-    <div className="axie-box">
+    <div
+      className="axie-box"
+      style={
+        axieState.enemyFocused && axieState.enemyFocused.id === axie.id
+          ? { backgroundColor: "#3D435B" }
+          : { backgroundColor: "#242735" }
+      }
+    >
       <div className="axie-info">
         {true && (
           <div className="axie-stats left">
@@ -51,7 +63,7 @@ export const AxieBoxEnemy = ({ position }) => {
               <span className="badge bg-success">Health</span>
               <br />
               <span className="badge-stats health-color">
-                {axie && axie.stats?.hp}
+                {axie && axie.stats?.hp && `${axie.stats?.hp * 6 + 150}`}
               </span>
             </div>
             <div>
@@ -75,6 +87,7 @@ export const AxieBoxEnemy = ({ position }) => {
                 }
               : {}
           }
+          onClick={handleAxieClicked}
         ></div>
         {true && (
           <div className="axie-stats right">
@@ -99,7 +112,12 @@ export const AxieBoxEnemy = ({ position }) => {
         <button className="btn btn-success mx-2" onClick={handleGetAxie}>
           Find
         </button>
-        <input type="text" value={enemyAxieId} onChange={handleInputChange} />
+        <input
+          type="text"
+          className="form-control"
+          value={enemyAxieId}
+          onChange={handleInputChange}
+        />
         {/* <Select */}
         {/*   className="enemy-select-axie" */}
         {/*   options={axieSelect} */}

@@ -1,5 +1,15 @@
 export const axieReducer = (state, action) => {
   switch (action.type) {
+    case "setTotalDamage":
+      return {
+        ...state,
+        totalDamage: action.payload,
+      };
+    case "setEnemyFocused":
+      return {
+        ...state,
+        enemyFocused: action.payload,
+      };
     case "addEnergy":
       return {
         ...state,
