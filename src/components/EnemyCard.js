@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AxieContext } from "../context/AxieContext";
 
-export const Card = ({ position, card }) => {
+export const EnemyCard = ({ position, card }) => {
   const { axieState } = useContext(AxieContext);
   const [axie, setAxie] = useState({});
   const [cardImage, setCardImage] = useState("");

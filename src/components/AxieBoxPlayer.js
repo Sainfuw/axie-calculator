@@ -1,41 +1,41 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { AxieContext } from "../context/AxieContext";
 
-export const AxieBoxPlayer = () => {
-  const [axieBaseStats] = useState({
-    aquatic: [39, 39, 35, 27],
-    beast: [31, 35, 31, 43],
-    bird: [27, 43, 35, 35],
-    bug: [35, 31, 35, 39],
-    plant: [43, 31, 31, 35],
-    reptile: [39, 35, 31, 35],
-    dawn: [35, 35, 39, 31],
-    dusk: [43, 39, 27, 31],
-    mech: [31, 39, 43, 27],
-  });
+export const AxieBoxPlayer = ({ position }) => {
+  const { axieState } = useContext(AxieContext);
+  const [axie, setAxie] = useState(null);
 
-  const [selectedAxie] = useState(null);
+  const {
+    allies: { allieOne, allieTwo, allieThree },
+  } = axieState;
+
+  useEffect(() => {
+    if (position === "front") {
+      setAxie(allieOne);
+    } else if (position === "middle") {
+      setAxie(allieTwo);
+    } else if (position === "back") {
+      setAxie(allieThree);
+    }
+  }, [allieOne, allieTwo, allieThree, position]);
 
   return (
     <div className="axie-box">
-      <div className="axie-options">
-        <button className="btn btn-success mx-2">Presets</button>
-        <button className="btn btn-warning mx-2">Kill</button>
-      </div>
       <div className="axie-info">
-        {selectedAxie && (
+        {true && (
           <div className="axie-stats left">
             <div>
               <span className="badge bg-success">Health</span>
               <br />
               <span className="badge-stats health-color">
-                {axieBaseStats[selectedAxie][0]}
+                {axie && axie.stats?.hp && `${axie.stats?.hp * 6 + 150}`}
               </span>
             </div>
             <div>
               <span className="badge bg-warning">Speed</span>
               <br />
               <span className="badge-stats speed-color">
-                {axieBaseStats[selectedAxie][1]}
+                {axie && axie.stats?.speed}
               </span>
             </div>
           </div>
@@ -43,30 +43,30 @@ export const AxieBoxPlayer = () => {
         <div
           className="axie-type-image"
           style={
-            selectedAxie
+            true
               ? {
-                  backgroundImage: `url(/${selectedAxie}.png)`,
-                  backgroundSize: "70%",
+                  backgroundImage: `url(${axie && axie.image})`,
+                  backgroundSize: "130%",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                 }
               : {}
           }
         ></div>
-        {selectedAxie && (
+        {true && (
           <div className="axie-stats right">
             <div>
               <span className="badge bg-purple">Skill</span>
               <br />
               <span className="badge-stats skill-color">
-                {axieBaseStats[selectedAxie][2]}
+                {axie && axie.stats?.skill}
               </span>
             </div>
-            <div className="pl-3">
+            <div>
               <span className="badge bg-danger">Morale</span>
               <br />
               <span className="badge-stats morale-color">
-                {axieBaseStats[selectedAxie][3]}
+                {axie && axie.stats?.morale}
               </span>
             </div>
           </div>

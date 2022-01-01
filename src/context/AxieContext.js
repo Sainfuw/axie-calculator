@@ -20,9 +20,9 @@ export const axieInitialState = {
   },
   damageCalculator: {
     usedCards: {
-      axieOne: { count: 0, bonus: false },
-      axieTwo: { count: 0, bonus: false },
-      axieThree: { count: 0, bonus: false },
+      allieOne: { cards: [], bonus: false },
+      allieTwo: { cards: [], bonus: false },
+      allieThree: { cards: [], bonus: false },
     },
     totalDamage: 0,
   },
@@ -36,6 +36,26 @@ export const AxieContext = createContext({});
 // componente proveedor del estado
 export const AxieProvider = ({ children }) => {
   const [axieState, dispatch] = useReducer(axieReducer, axieInitialState);
+
+  const addCardCalculator = (axie) => {
+    dispatch({ type: "addCardCalculator", payload: axie });
+  };
+
+  const addAllieOne = async (id) => {
+    const res = await getAxieInfo(id);
+    dispatch({ type: "addAllieOne", payload: res });
+    return res;
+  };
+
+  const fillOtherAllies = async (allies) => {
+    dispatch({
+      type: "fillOtherAllies",
+      payload: {
+        allieTwo: await getAxieInfo(allies[0]),
+        allieThree: await getAxieInfo(allies[1]),
+      },
+    });
+  };
 
   const setTotalDamage = (num) => {
     dispatch({ type: "setTotalDamage", payload: num });
@@ -51,7 +71,7 @@ export const AxieProvider = ({ children }) => {
     return res;
   };
 
-  const fillOtherAxies = async (enemies) => {
+  const fillOtherEnemies = async (enemies) => {
     dispatch({
       type: "fillOtherEnemies",
       payload: {
@@ -72,13 +92,16 @@ export const AxieProvider = ({ children }) => {
   return (
     <AxieContext.Provider
       value={{
+        addCardCalculator,
+        addAllieOne,
+        fillOtherAllies,
         setTotalDamage,
         setEnemyFocused,
         axieState,
         addEnergy,
         removeEnergy,
         addEnemieOne,
-        fillOtherAxies,
+        fillOtherEnemies,
       }}
     >
       {children}

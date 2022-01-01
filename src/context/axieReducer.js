@@ -1,5 +1,27 @@
 export const axieReducer = (state, action) => {
   switch (action.type) {
+    case "addCardCalculator":
+      return {
+        ...state,
+        damageCalculator: {
+          ...state.damageCalculator,
+          usedCards: action.payload,
+        },
+      };
+    case "addAllieOne":
+      return {
+        ...state,
+        allies: { allieOne: action.payload, allieTwo: {}, allieThree: {} },
+      };
+    case "fillOtherAllies":
+      return {
+        ...state,
+        allies: {
+          ...state.allies,
+          allieTwo: action.payload.allieTwo,
+          allieThree: action.payload.allieThree,
+        },
+      };
     case "setTotalDamage":
       return {
         ...state,

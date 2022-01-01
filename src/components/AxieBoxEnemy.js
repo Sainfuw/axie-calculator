@@ -1,11 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AxieContext } from "../context/AxieContext";
-import { getOwnerAxies } from "../api/queries";
 
 export const AxieBoxEnemy = ({ position }) => {
-  const { axieState, addEnemieOne, fillOtherAxies, setEnemyFocused } =
-    useContext(AxieContext);
-  const [enemyAxieId, setEnemyAxieId] = useState("");
+  const { axieState, setEnemyFocused } = useContext(AxieContext);
   const [axie, setAxie] = useState(null);
 
   const {
@@ -22,29 +19,8 @@ export const AxieBoxEnemy = ({ position }) => {
     }
   }, [enemyOne, enemyTwo, enemyThree, position]);
 
-  const handleInputChange = (e) => {
-    const value = e.target.value.replace(/\D/, "");
-    setEnemyAxieId(value);
-  };
-
-  const handleGetAxie = async () => {
-    const res = await addEnemieOne(enemyAxieId);
-    res && getEnemyAxies(res.owner, res.id);
-  };
-
   const handleAxieClicked = () => {
     setEnemyFocused({ id: axie.id, class: axie.class });
-  };
-
-  const getEnemyAxies = async (ownerId, id) => {
-    const res = await getOwnerAxies(ownerId);
-    const axiesArray = res.filter((axie) => axie.id !== id);
-    if (axiesArray.length === 2) {
-      fillOtherAxies(axiesArray.map((axie) => axie.id));
-    } else {
-      // dibujar modal con la lista de axies
-    }
-    console.log(axiesArray);
   };
 
   return (
@@ -107,24 +83,6 @@ export const AxieBoxEnemy = ({ position }) => {
             </div>
           </div>
         )}
-      </div>
-      <div className="axie-options">
-        <button className="btn btn-success mx-2" onClick={handleGetAxie}>
-          Find
-        </button>
-        <input
-          type="text"
-          className="form-control"
-          value={enemyAxieId}
-          onChange={handleInputChange}
-        />
-        {/* <Select */}
-        {/*   className="enemy-select-axie" */}
-        {/*   options={axieSelect} */}
-        {/*   placeholder="Please select Axie" */}
-        {/*   onChange={handleSelectChange} */}
-        {/* /> */}
-        <button className="btn btn-warning mx-2">Kill</button>
       </div>
     </div>
   );
