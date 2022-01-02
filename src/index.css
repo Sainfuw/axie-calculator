@@ -257,3 +257,20 @@ html, body, #root {
   justify-content: space-between;
   align-items: center;
 }
+
+.reset-start {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 0;
+  color: white;
+  background-color: red;
+}
+
+.top-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}

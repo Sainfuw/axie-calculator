@@ -5,7 +5,7 @@ export const getOwnerAxies = async (ownerId) => {
       from: 0,
       size: 24,
       sort: "IdDesc",
-      auctionType: "NotForSale",
+      auctionType: "All",
       owner: ownerId,
       criteria: {
         region: null,

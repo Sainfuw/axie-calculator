@@ -20,13 +20,11 @@ export const axieInitialState = {
   },
   damageCalculator: {
     usedCards: {
-      allieOne: { cards: [], bonus: false },
-      allieTwo: { cards: [], bonus: false },
-      allieThree: { cards: [], bonus: false },
+      allieOne: { cards: [], bonus: false, total: 0 },
+      allieTwo: { cards: [], bonus: false, total: 0 },
+      allieThree: { cards: [], bonus: false, total: 0 },
     },
-    totalDamage: 0,
   },
-  totalDamage: 0,
   myHistory: {},
 };
 
@@ -36,6 +34,10 @@ export const AxieContext = createContext({});
 // componente proveedor del estado
 export const AxieProvider = ({ children }) => {
   const [axieState, dispatch] = useReducer(axieReducer, axieInitialState);
+
+  const setDamageCalculatorTotal = (allie, total) => {
+    dispatch({ type: "setDamageCalculatorTotal", payload: { allie, total } });
+  };
 
   const addCardCalculator = (axie) => {
     dispatch({ type: "addCardCalculator", payload: axie });
@@ -92,6 +94,7 @@ export const AxieProvider = ({ children }) => {
   return (
     <AxieContext.Provider
       value={{
+        setDamageCalculatorTotal,
         addCardCalculator,
         addAllieOne,
         fillOtherAllies,
