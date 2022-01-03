@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AxieContext } from "../context/AxieContext";
+import calculateDamage from "../helpers/calculateDamage";
 
 export const AllieCard = ({ position, card }) => {
   const { axieState, addCardCalculator } = useContext(AxieContext);
@@ -30,25 +31,54 @@ export const AllieCard = ({ position, card }) => {
     }
   }, [cardImage, cardName, axie, card]);
 
+  const setTotal = (axieCard) => {
+    const currentAxie = axieState.damageCalculator.usedCards[getAllie];
+    const bonus = currentAxie.bonus;
+    const focus = axieState.focus?.class;
+
+    const result = calculateDamage(
+      axie.class,
+      focus,
+      axieCard,
+      axieState,
+      currentAxie.cards.length + 1,
+      bonus,
+      getAllie
+    );
+    const total = currentAxie.cards.reduce((sum, card) => {
+      const dmgCard = calculateDamage(
+        axie.class,
+        focus,
+        card,
+        axieState,
+        currentAxie.cards.length + 1,
+        bonus,
+        getAllie
+      );
+      return sum + dmgCard;
+    }, 0);
+
+    return total + result;
+  };
+
   const handleCardClick = () => {
     const usedCards = axieState.damageCalculator.usedCards;
-    const allie = getAllie();
     addCardCalculator({
       ...usedCards,
-      [allie]: {
-        ...usedCards[`${allie}`],
-        cards: [...usedCards[`${allie}`].cards, axie.parts[card]],
+      [getAllie]: {
+        ...usedCards[getAllie],
+        cards: [...usedCards[getAllie].cards, axie.parts[card]],
+        total: setTotal(axie.parts[card]),
       },
     });
   };
 
-  const getAllie = () => {
-    return position === "front"
+  const getAllie =
+    position === "front"
       ? "allieOne"
       : position === "middle"
       ? "allieTwo"
       : "allieThree";
-  };
 
   return (
     <div

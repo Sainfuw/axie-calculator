@@ -6,7 +6,7 @@ import { getAxieInfo } from "../api/queries";
 // estado inicial
 export const axieInitialState = {
   energyEnemy: 3,
-  enemyFocused: null,
+  focus: null,
   enemyHistory: {},
   enemies: {
     enemyOne: {},
@@ -34,6 +34,10 @@ export const AxieContext = createContext({});
 // componente proveedor del estado
 export const AxieProvider = ({ children }) => {
   const [axieState, dispatch] = useReducer(axieReducer, axieInitialState);
+
+  const setBonus = (allie) => {
+    dispatch({ type: "setBonus", payload: allie });
+  };
 
   const setDamageCalculatorTotal = (allie, total) => {
     dispatch({ type: "setDamageCalculatorTotal", payload: { allie, total } });
@@ -63,8 +67,8 @@ export const AxieProvider = ({ children }) => {
     dispatch({ type: "setTotalDamage", payload: num });
   };
 
-  const setEnemyFocused = (axie) => {
-    dispatch({ type: "setEnemyFocused", payload: axie });
+  const setFocus = (axie) => {
+    dispatch({ type: "setFocus", payload: axie });
   };
 
   const addEnemieOne = async (id) => {
@@ -94,12 +98,13 @@ export const AxieProvider = ({ children }) => {
   return (
     <AxieContext.Provider
       value={{
+        setBonus,
         setDamageCalculatorTotal,
         addCardCalculator,
         addAllieOne,
         fillOtherAllies,
         setTotalDamage,
-        setEnemyFocused,
+        setFocus,
         axieState,
         addEnergy,
         removeEnergy,

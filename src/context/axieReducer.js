@@ -1,5 +1,19 @@
 export const axieReducer = (state, action) => {
   switch (action.type) {
+    case "setBonus":
+      return {
+        ...state,
+        damageCalculator: {
+          ...state.damageCalculator,
+          usedCards: {
+            ...state.damageCalculator.usedCards,
+            [action.payload.allie]: {
+              ...state.damageCalculator.usedCards[`${action.payload.allie}`],
+              bonus: action.payload.bonus,
+            },
+          },
+        },
+      };
     case "setDamageCalculatorTotal":
       return {
         ...state,
@@ -41,10 +55,10 @@ export const axieReducer = (state, action) => {
         ...state,
         totalDamage: action.payload,
       };
-    case "setEnemyFocused":
+    case "setFocus":
       return {
         ...state,
-        enemyFocused: action.payload,
+        focus: action.payload,
       };
     case "addEnergy":
       return {

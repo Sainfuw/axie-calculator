@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AxieContext } from "../context/AxieContext";
+import calculateDamage from "../helpers/calculateDamage";
 
 export const DamageCalculator = ({ position }) => {
-  const { axieState, addCardCalculator } = useContext(AxieContext);
-  const [calculatedDamage, setCalculatedDamage] = useState([]);
-  const [bonus, setBonus] = useState(false);
+  const { axieState, addCardCalculator, setBonus } = useContext(AxieContext);
+  const [calculatedDamage, setCalculatedDamage] = useState({
+    cards: [],
+    total: { plant: 0, fish: 0, beast: 0 },
+  });
+
   const [getAllie] = useState(
     position === "front"
       ? "allieOne"
@@ -13,76 +17,44 @@ export const DamageCalculator = ({ position }) => {
       : "allieThree"
   );
 
+  const bonus = axieState.damageCalculator.usedCards[getAllie].bonus;
+
   useEffect(() => {
-    const cards = axieState.damageCalculator.usedCards[`${getAllie}`].cards;
-    const axieClass = axieState.allies[`${getAllie}`].class;
+    const cards = axieState.damageCalculator.usedCards[getAllie]?.cards;
     const plantClasses = ["Plant", "Reptile", "Dusk"];
     const fishClasses = ["Aquatic", "Bird", "Dawn"];
 
-    const calculate = (damage, myClass, enemyClass, card) => {
-      const skill = axieState.allies[`${getAllie}`].stats.skill;
-      const sameClass = axieClass === card.class ? 1.1 : 1;
-      const combo = cards.length > 1 ? skill * 0.55 - 12.5 : 0;
-
-      let bonusValue = 1;
-      if (bonus) {
-        const splittedDescription = card.abilities[0].description.split(" ");
-        if (splittedDescription[0] === "Deal") {
-          bonusValue = parseInt(splittedDescription[1]) / 100;
-        }
-      }
-
-      if (
-        (myClass === "Plant" && enemyClass === "Fish") ||
-        (myClass === "Fish" && enemyClass === "Beast") ||
-        (myClass === "Beast" && enemyClass === "Plant")
-      ) {
-        return parseInt((damage * 1.15 * sameClass + combo) * bonusValue);
-      } else if (
-        (myClass === "Plant" && enemyClass === "Beast") ||
-        (myClass === "Fish" && enemyClass === "Plant") ||
-        (myClass === "Beast" && enemyClass === "Fish")
-      ) {
-        return parseInt((damage * 0.85 * sameClass + combo) * bonusValue);
-      } else if (
-        (myClass === "Plant" && enemyClass === "Plant") ||
-        (myClass === "Fish" && enemyClass === "Fish") ||
-        (myClass === "Beast" && enemyClass === "Beast")
-      ) {
-        return parseInt((damage * 1 * sameClass + combo) * bonusValue);
-      }
-    };
-
-    const cardsPlayed = cards.map((card) => {
+    const cardsPlayed = cards?.map((card) => {
+      const info = [card, axieState, cards.length, bonus, getAllie];
       return {
         name: card.name,
         fish: plantClasses.includes(card.class)
-          ? calculate(card.abilities[0].attack, "Plant", "Fish", card)
+          ? calculateDamage("Plant", "Aquatic", ...info)
           : fishClasses.includes(card.class)
-          ? calculate(card.abilities[0].attack, "Fish", "Fish", card)
-          : calculate(card.abilities[0].attack, "Beast", "Fish", card),
+          ? calculateDamage("Aquatic", "Aquatic", ...info)
+          : calculateDamage("Beast", "Aquatic", ...info),
         beast: plantClasses.includes(card.class)
-          ? calculate(card.abilities[0].attack, "Plant", "Beast", card)
+          ? calculateDamage("Plant", "Beast", ...info)
           : fishClasses.includes(card.class)
-          ? calculate(card.abilities[0].attack, "Fish", "Beast", card)
-          : calculate(card.abilities[0].attack, "Beast", "Beast", card),
+          ? calculateDamage("Aquatic", "Beast", ...info)
+          : calculateDamage("Beast", "Beast", ...info),
         plant: plantClasses.includes(card.class)
-          ? calculate(card.abilities[0].attack, "Plant", "Plant", card)
+          ? calculateDamage("Plant", "Plant", ...info)
           : fishClasses.includes(card.class)
-          ? calculate(card.abilities[0].attack, "Fish", "Plant", card)
-          : calculate(card.abilities[0].attack, "Beast", "Plant", card),
+          ? calculateDamage("Aquatic", "Plant", ...info)
+          : calculateDamage("Beast", "Plant", ...info),
       };
     });
 
-    const plant = cardsPlayed.reduce(
+    const plant = cardsPlayed?.reduce(
       (sum, card) => sum + parseInt(card.plant),
       0
     );
-    const fish = cardsPlayed.reduce(
+    const fish = cardsPlayed?.reduce(
       (sum, card) => sum + parseInt(card.fish),
       0
     );
-    const beast = cardsPlayed.reduce(
+    const beast = cardsPlayed?.reduce(
       (sum, card) => sum + parseInt(card.beast),
       0
     );
@@ -91,13 +63,7 @@ export const DamageCalculator = ({ position }) => {
       cards: cardsPlayed,
       total: { plant, fish, beast },
     });
-  }, [
-    position,
-    axieState.allies,
-    axieState.damageCalculator.usedCards,
-    getAllie,
-    bonus,
-  ]);
+  }, [position, axieState, getAllie, bonus]);
 
   const handleResetClick = () => {
     const usedCards = axieState.damageCalculator.usedCards;
@@ -110,12 +76,15 @@ export const DamageCalculator = ({ position }) => {
     addCardCalculator({
       ...usedCards,
       [getAllie]: {
-        ...usedCards[`${getAllie}`],
+        ...usedCards[getAllie],
         cards: [],
-        bonus: false,
-        total: { plant: 0, fish: 0, beast: 0 },
+        total: 0,
       },
     });
+  };
+
+  const handleBonusChange = () => {
+    setBonus({ allie: getAllie, bonus: !bonus });
   };
 
   return (
@@ -130,7 +99,7 @@ export const DamageCalculator = ({ position }) => {
             className="form-check-input"
             type="checkbox"
             value={bonus}
-            onChange={() => setBonus((bonus) => !bonus)}
+            onChange={handleBonusChange}
           />
         </div>
       </div>

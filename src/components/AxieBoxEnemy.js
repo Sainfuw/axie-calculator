@@ -2,8 +2,16 @@ import React, { useContext, useState, useEffect } from "react";
 import { AxieContext } from "../context/AxieContext";
 
 export const AxieBoxEnemy = ({ position }) => {
-  const { axieState, setEnemyFocused } = useContext(AxieContext);
+  const { axieState, setFocus } = useContext(AxieContext);
   const [axie, setAxie] = useState(null);
+  const [totalDamage, setTotalDamage] = useState(0);
+
+  useEffect(() => {
+    const values = axieState.damageCalculator.usedCards;
+    setTotalDamage(
+      Object.values(values).reduce((sum, allie) => sum + allie.total, 0)
+    );
+  }, [axieState]);
 
   const {
     enemies: { enemyOne, enemyTwo, enemyThree },
@@ -20,18 +28,28 @@ export const AxieBoxEnemy = ({ position }) => {
   }, [enemyOne, enemyTwo, enemyThree, position]);
 
   const handleAxieClicked = () => {
-    setEnemyFocused({ id: axie.id, class: axie.class });
+    setFocus(axie);
   };
 
   return (
     <div
       className="axie-box"
       style={
-        axieState.enemyFocused && axieState.enemyFocused.id === axie.id
+        axieState.focus && axieState.focus.id === axie.id
           ? { backgroundColor: "#3D435B" }
           : { backgroundColor: "#242735" }
       }
     >
+      <div
+        className="total-damage"
+        style={
+          axieState.focus && axieState.focus.id === axie.id
+            ? { display: "flex" }
+            : { display: "none" }
+        }
+      >
+        <span className="total-damage-text">{totalDamage}</span>
+      </div>
       <div className="axie-info">
         {true && (
           <div className="axie-stats left">
