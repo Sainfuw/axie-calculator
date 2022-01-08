@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AllieFinder } from "./AllieFinder";
 import { EnemyFinder } from "./EnemyFinder";
 
 import { EnergyContainer } from "./EnergyContainer";
+import { AxieContext } from "../context/AxieContext";
 
 export const InfoPanel = () => {
+  const { axieState } = useContext(AxieContext);
   return (
     <div className="info-panel">
-      <button className="btn btn-info button-restart">Restart</button>
-      <AllieFinder />
+      <div className="damage">
+        <EnemyFinder />
+        <AllieFinder />
+      </div>
+      <div className="round">
+        <h5>ROUND</h5>
+        {axieState.round}
+      </div>
       <EnergyContainer />
-      <EnemyFinder />
-      <button className="btn btn-primary button-restart">Next Turn</button>
     </div>
   );
 };

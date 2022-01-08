@@ -6,6 +6,7 @@ import { getAxieInfo } from "../api/queries";
 // estado inicial
 export const axieInitialState = {
   energyEnemy: 3,
+  round: 1,
   focus: null,
   enemyHistory: {},
   enemies: {
@@ -95,6 +96,18 @@ export const AxieProvider = ({ children }) => {
     dispatch({ type: "removeEnergy", payload: count });
   };
 
+  const restartEnergy = () => {
+    dispatch({ type: "restartEnergy" });
+  };
+
+  const nextTurn = () => {
+    dispatch({ type: "nextTurn" });
+  };
+
+  const restartTurns = () => {
+    dispatch({ type: "restartTurns" });
+  };
+
   return (
     <AxieContext.Provider
       value={{
@@ -108,6 +121,9 @@ export const AxieProvider = ({ children }) => {
         axieState,
         addEnergy,
         removeEnergy,
+        restartEnergy,
+        nextTurn,
+        restartTurns,
         addEnemieOne,
         fillOtherEnemies,
       }}

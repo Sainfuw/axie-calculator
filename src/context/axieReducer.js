@@ -71,6 +71,21 @@ export const axieReducer = (state, action) => {
         energyEnemy:
           state.energyEnemy === 0 ? 0 : state.energyEnemy - action.payload,
       };
+    case "restartEnergy":
+      return {
+        ...state,
+        energyEnemy: 3,
+      };
+    case "nextTurn":
+      return {
+        ...state,
+        round: state.round + 1,
+      };
+    case "restartTurns":
+      return {
+        ...state,
+        round: 1,
+      };
     case "addEnemieOne":
       return {
         ...state,
