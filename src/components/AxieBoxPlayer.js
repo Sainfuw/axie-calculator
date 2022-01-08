@@ -1,9 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { AxieContext } from "../context/AxieContext";
+import { AxiePIXI } from "./AxiePIXI";
 
 export const AxieBoxPlayer = ({ position }) => {
   const { axieState } = useContext(AxieContext);
   const [axie, setAxie] = useState(null);
+
+  const pixiRef = useRef(null);
 
   const {
     allies: { allieOne, allieTwo, allieThree },
@@ -18,6 +21,14 @@ export const AxieBoxPlayer = ({ position }) => {
       setAxie(allieThree);
     }
   }, [allieOne, allieTwo, allieThree, position]);
+
+  useEffect(() => {
+    axie?.figure?.model &&
+      AxiePIXI({
+        model: axie.figure.model,
+        position: pixiRef.current,
+      });
+  }, [axie]);
 
   return (
     <div className="axie-box">
@@ -40,19 +51,7 @@ export const AxieBoxPlayer = ({ position }) => {
             </div>
           </div>
         )}
-        <div
-          className="axie-type-image"
-          style={
-            true
-              ? {
-                  backgroundImage: `url(${axie && axie.image})`,
-                  backgroundSize: "130%",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }
-              : {}
-          }
-        ></div>
+        <div ref={pixiRef} className="axie-type-image"></div>
         {true && (
           <div className="axie-stats right">
             <div>
