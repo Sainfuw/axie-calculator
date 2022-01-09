@@ -3,44 +3,44 @@ import { AxieContext } from "../context/AxieContext";
 import calculateDamage from "../helpers/calculateDamage";
 
 export const DamageCalculator = ({ position }) => {
-  const { axieState, addCardCalculator, setBonus } = useContext(AxieContext);
+  const { axieState, addCardCalculator, setBonus, setDamageCalculatorTotal } =
+    useContext(AxieContext);
   const [calculatedDamage, setCalculatedDamage] = useState({
     cards: [],
-    total: { plant: 0, fish: 0, beast: 0 },
+    total: { plant: 0, aquatic: 0, beast: 0 },
   });
 
-  const [getAllie] = useState(
+  const getAllie =
     position === "front"
       ? "allieOne"
       : position === "middle"
       ? "allieTwo"
-      : "allieThree"
-  );
+      : "allieThree";
 
   const bonus = axieState.damageCalculator.usedCards[getAllie].bonus;
 
   useEffect(() => {
     const cards = axieState.damageCalculator.usedCards[getAllie]?.cards;
     const plantClasses = ["Plant", "Reptile", "Dusk"];
-    const fishClasses = ["Aquatic", "Bird", "Dawn"];
+    const aquaticClasses = ["Aquatic", "Bird", "Dawn"];
 
     const cardsPlayed = cards?.map((card) => {
       const info = [card, axieState, cards.length, bonus, getAllie];
       return {
         name: card.name,
-        fish: plantClasses.includes(card.class)
+        aquatic: plantClasses.includes(card.class)
           ? calculateDamage("Plant", "Aquatic", ...info)
-          : fishClasses.includes(card.class)
+          : aquaticClasses.includes(card.class)
           ? calculateDamage("Aquatic", "Aquatic", ...info)
           : calculateDamage("Beast", "Aquatic", ...info),
         beast: plantClasses.includes(card.class)
           ? calculateDamage("Plant", "Beast", ...info)
-          : fishClasses.includes(card.class)
+          : aquaticClasses.includes(card.class)
           ? calculateDamage("Aquatic", "Beast", ...info)
           : calculateDamage("Beast", "Beast", ...info),
         plant: plantClasses.includes(card.class)
           ? calculateDamage("Plant", "Plant", ...info)
-          : fishClasses.includes(card.class)
+          : aquaticClasses.includes(card.class)
           ? calculateDamage("Aquatic", "Plant", ...info)
           : calculateDamage("Beast", "Plant", ...info),
       };
@@ -50,8 +50,8 @@ export const DamageCalculator = ({ position }) => {
       (sum, card) => sum + parseInt(card.plant),
       0
     );
-    const fish = cardsPlayed?.reduce(
-      (sum, card) => sum + parseInt(card.fish),
+    const aquatic = cardsPlayed?.reduce(
+      (sum, card) => sum + parseInt(card.aquatic),
       0
     );
     const beast = cardsPlayed?.reduce(
@@ -61,7 +61,7 @@ export const DamageCalculator = ({ position }) => {
 
     setCalculatedDamage({
       cards: cardsPlayed,
-      total: { plant, fish, beast },
+      total: { plant, aquatic, beast },
     });
   }, [position, axieState, getAllie, bonus]);
 
@@ -70,7 +70,7 @@ export const DamageCalculator = ({ position }) => {
 
     setCalculatedDamage({
       cards: [],
-      total: { plant: 0, fish: 0, beast: 0 },
+      total: { plant: 0, aquatic: 0, beast: 0 },
     });
 
     addCardCalculator({
@@ -84,6 +84,15 @@ export const DamageCalculator = ({ position }) => {
   };
 
   const handleBonusChange = () => {
+    const plantClasses = ["Plant", "Reptile", "Dusk"];
+    const aquaticClasses = ["Aquatic", "Bird", "Dawn"];
+    const finalClass = plantClasses.includes(axieState.focus.class)
+      ? "plant"
+      : aquaticClasses.includes(axieState.focus.class)
+      ? "aquatic"
+      : "beast";
+
+    setDamageCalculatorTotal(getAllie, calculatedDamage.total[finalClass]);
     setBonus({ allie: getAllie, bonus: !bonus });
   };
 
@@ -147,7 +156,7 @@ export const DamageCalculator = ({ position }) => {
             <tr key={index}>
               <td>{card.name}</td>
               <td>{card.plant}</td>
-              <td>{card.fish}</td>
+              <td>{card.aquatic}</td>
               <td>{card.beast}</td>
             </tr>
           ))}
@@ -159,7 +168,7 @@ export const DamageCalculator = ({ position }) => {
               <b>{calculatedDamage?.total?.plant}</b>
             </td>
             <td>
-              <b>{calculatedDamage?.total?.fish}</b>
+              <b>{calculatedDamage?.total?.aquatic}</b>
             </td>
             <td>
               <b>{calculatedDamage?.total?.beast}</b>

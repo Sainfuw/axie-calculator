@@ -293,7 +293,7 @@ html, body, #root {
 .total-damage-text {
   font-size: 30px;
   font-weight: bold;
-  color: #A1A6B6;
+  color: white;
   text-shadow: 6px 3px 5px #000000;
 }
 
@@ -313,4 +313,59 @@ html, body, #root {
 
 .btn {
   min-width: 100px;
+}
+
+.axie-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3A3F50;
+  border: 1px solid #A1A6B6;
+  border-radius: 10px;
+  width: 170px;
+  height: 130px;
+  position: relative;
+
+  transition: .5s background-color .5s border;
+}
+
+.axie-selection-id {
+  position: absolute;
+  bottom: 0;
+  color: white;
+  font-weight: bold;
+}
+ 
+.axie-selection-image {
+  width: 170px;
+  height: 130px;
+
+  transition: .5s background-color .5s border;
+}
+
+.axie-selection-image:hover {
+  background-color: #282B39;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.axie-finder-modal {
+  background-color: #282B39 !important;
+}
+
+.axie-selection-container {
+  display: grid;
+  margin: auto;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 25px;
+}
+
+.axie-selected-color {
+  background: repeating-linear-gradient(
+    -45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
 }
