@@ -27,9 +27,9 @@ export const AxieBoxEnemy = ({ position }) => {
     }
   }, [enemyOne, enemyTwo, enemyThree, position]);
 
-  const handleAxieClicked = () => {
-    setFocus(axie);
-  };
+  // const handleAxieClicked = () => {
+  //   setFocus(axie);
+  // };
 
   return (
     <div
@@ -40,16 +40,16 @@ export const AxieBoxEnemy = ({ position }) => {
           : { backgroundColor: "#242735" }
       }
     >
-      <div
-        className="total-damage"
-        style={
-          axieState.focus && axieState.focus.id === axie.id
-            ? { display: "flex" }
-            : { display: "none" }
-        }
-      >
-        <span className="total-damage-text">{totalDamage}</span>
-      </div>
+      {/* <div */}
+      {/*   className="total-damage" */}
+      {/*   style={ */}
+      {/*     axieState.focus && axieState.focus.id === axie.id */}
+      {/*       ? { display: "flex" } */}
+      {/*       : { display: "none" } */}
+      {/*   } */}
+      {/* > */}
+      {/*   <span className="total-damage-text">{totalDamage}</span> */}
+      {/* </div> */}
       <div className="axie-info">
         {true && (
           <div className="axie-stats left">
@@ -81,7 +81,7 @@ export const AxieBoxEnemy = ({ position }) => {
                 }
               : {}
           }
-          onClick={handleAxieClicked}
+          // onClick={handleAxieClicked}
         ></div>
         {true && (
           <div className="axie-stats right">
