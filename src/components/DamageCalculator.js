@@ -3,8 +3,7 @@ import { AxieContext } from "../context/AxieContext";
 import calculateDamage from "../helpers/calculateDamage";
 
 export const DamageCalculator = ({ position }) => {
-  const { axieState, addCardCalculator, setBonus, setDamageCalculatorTotal } =
-    useContext(AxieContext);
+  const { axieState, addCardCalculator, setBonus } = useContext(AxieContext);
   const [calculatedDamage, setCalculatedDamage] = useState({
     cards: [],
     total: { plant: 0, aquatic: 0, beast: 0 },
@@ -84,15 +83,6 @@ export const DamageCalculator = ({ position }) => {
   };
 
   const handleBonusChange = () => {
-    const plantClasses = ["Plant", "Reptile", "Dusk"];
-    const aquaticClasses = ["Aquatic", "Bird", "Dawn"];
-    const finalClass = plantClasses.includes(axieState.focus.class)
-      ? "plant"
-      : aquaticClasses.includes(axieState.focus.class)
-      ? "aquatic"
-      : "beast";
-
-    setDamageCalculatorTotal(getAllie, calculatedDamage.total[finalClass]);
     setBonus({ allie: getAllie, bonus: !bonus });
   };
 
