@@ -2,16 +2,16 @@ import React, { useContext, useState, useEffect } from "react";
 import { AxieContext } from "../context/AxieContext";
 
 export const AxieBoxEnemy = ({ position }) => {
-  const { axieState, setFocus } = useContext(AxieContext);
+  const { axieState } = useContext(AxieContext);
   const [axie, setAxie] = useState(null);
-  const [totalDamage, setTotalDamage] = useState(0);
+  // const [totalDamage, setTotalDamage] = useState(0);
 
-  useEffect(() => {
-    const values = axieState.damageCalculator.usedCards;
-    setTotalDamage(
-      Object.values(values).reduce((sum, allie) => sum + allie.total, 0)
-    );
-  }, [axieState]);
+  // useEffect(() => {
+  //   const values = axieState.damageCalculator.usedCards;
+  //   setTotalDamage(
+  //     Object.values(values).reduce((sum, allie) => sum + allie.total, 0)
+  //   );
+  // }, [axieState]);
 
   const {
     enemies: { enemyOne, enemyTwo, enemyThree },
