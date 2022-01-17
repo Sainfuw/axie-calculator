@@ -12,7 +12,7 @@ const calculateDamage = (
   const skill = axieState.allies[allie].stats.skill;
   const morale = axieState.allies[allie].stats.morale;
   const sameClass = axieClass === card.class ? 1.1 : 1;
-  const combo = cardsCount > 1 ? skill * 0.55 - 12.5 : 0;
+  const combo = cardsCount > 1 ? (skill * 0.55 - 12.5) / 100 + 1 : 1;
   let critical = parseFloat(
     ((Math.sqrt(morale) * 10 + morale * 0.4 - 18) / 100 + 1).toFixed(2)
   );
@@ -34,19 +34,19 @@ const calculateDamage = (
     (myClass === "Aquatic" && enemyClass === "Beast") ||
     (myClass === "Beast" && enemyClass === "Plant")
   ) {
-    return parseInt(damage * 1.15 * sameClass * bonusValue * critical + combo);
+    return parseInt(damage * 1.15 * sameClass * bonusValue * critical * combo);
   } else if (
     (myClass === "Plant" && enemyClass === "Beast") ||
     (myClass === "Aquatic" && enemyClass === "Plant") ||
     (myClass === "Beast" && enemyClass === "Aquatic")
   ) {
-    return parseInt(damage * 0.85 * sameClass * bonusValue * critical + combo);
+    return parseInt(damage * 0.85 * sameClass * bonusValue * critical * combo);
   } else if (
     (myClass === "Plant" && enemyClass === "Plant") ||
     (myClass === "Aquatic" && enemyClass === "Aquatic") ||
     (myClass === "Beast" && enemyClass === "Beast")
   ) {
-    return parseInt(damage * 1 * sameClass * bonusValue * critical + combo);
+    return parseInt(damage * 1 * sameClass * bonusValue * critical * combo);
   }
 };
 
