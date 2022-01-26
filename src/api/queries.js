@@ -56,6 +56,6 @@ export const getAxieInfo = async (id) => {
       body: JSON.stringify(body),
     }
   );
-  const res = await result.json();
-  return res.data.axie;
+  const data = await result.json();
+  return data.data.axie;
 };

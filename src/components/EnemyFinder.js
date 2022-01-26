@@ -2,12 +2,12 @@ import React, { useState, useContext } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 import { getOwnerAxies } from "../api/queries";
-import { AxieContext } from "../context/AxieContext";
+import { EnemyContext } from "../context/EnemyContext";
 import { AxieFinder } from "./AxieFinder";
 
 export const EnemyFinder = () => {
   const [enemyAxieId, setEnemyAxieId] = useState("");
-  const { addEnemieOne, fillOtherEnemies } = useContext(AxieContext);
+  const { addEnemieOne, fillOtherEnemies } = useContext(EnemyContext);
   const [show, setShow] = useState(false);
   const [axiesArray, setAxiesArray] = useState([]);
   const [selected, setSelected] = useState([]);

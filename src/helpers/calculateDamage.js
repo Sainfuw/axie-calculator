@@ -21,7 +21,8 @@ const calculateDamage = (
     : axieClass === "Dawn" && ["Aquatic", "Bird"];
 
   const sameClass = axieClass.includes(card.class) ? 1.1 : 1;
-  const combo = cardsCount > 1 ? damage * ((skill * 0.55 - 12.5) / 100) : 0;
+  const combo =
+    cardsCount > 1 ? damage * (((skill * 0.55 - 12.5) / 100) * 0.985) : 0;
   let critical = parseFloat(
     ((Math.sqrt(morale) * 10 + morale * 0.4 - 18) / 100 + 1).toFixed(2)
   );

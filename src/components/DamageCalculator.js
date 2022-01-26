@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AxieContext } from "../context/AxieContext";
+import { DamageCalculatorContext } from "../context/DamageCalculatorContext";
 import calculateDamage from "../helpers/calculateDamage";
 
 export const DamageCalculator = ({ position }) => {
-  const { axieState, addCardCalculator, setBonus } = useContext(AxieContext);
+  const { damageCalculatorState, addCardCalculator, setBonus } = useContext(
+    DamageCalculatorContext
+  );
   const [calculatedDamage, setCalculatedDamage] = useState({
     cards: [],
     total: { plant: 0, aquatic: 0, beast: 0 },
@@ -16,15 +18,17 @@ export const DamageCalculator = ({ position }) => {
       ? "allieTwo"
       : "allieThree";
 
-  const bonus = axieState.damageCalculator.usedCards[getAllie].bonus;
+  const bonus =
+    damageCalculatorState.damageCalculator.usedCards[getAllie].bonus;
 
   useEffect(() => {
-    const cards = axieState.damageCalculator.usedCards[getAllie]?.cards;
+    const cards =
+      damageCalculatorState.damageCalculator.usedCards[getAllie]?.cards;
     const plantClasses = ["Plant", "Reptile", "Dusk"];
     const aquaticClasses = ["Aquatic", "Bird", "Dawn"];
 
     const cardsPlayed = cards?.map((card) => {
-      const info = [card, axieState, cards.length, bonus, getAllie];
+      const info = [card, damageCalculatorState, cards.length, bonus, getAllie];
       return {
         name: card.name,
         aquatic: plantClasses.includes(card.class)
@@ -62,10 +66,10 @@ export const DamageCalculator = ({ position }) => {
       cards: cardsPlayed,
       total: { plant, aquatic, beast },
     });
-  }, [position, axieState, getAllie, bonus]);
+  }, [position, damageCalculatorState, getAllie, bonus]);
 
   const handleResetClick = () => {
-    const usedCards = axieState.damageCalculator.usedCards;
+    const usedCards = damageCalculatorState.damageCalculator.usedCards;
 
     setCalculatedDamage({
       cards: [],

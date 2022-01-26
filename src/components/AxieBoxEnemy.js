@@ -1,21 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AxieContext } from "../context/AxieContext";
+import { EnemyContext } from "../context/EnemyContext";
 
 export const AxieBoxEnemy = ({ position }) => {
-  const { axieState } = useContext(AxieContext);
+  const { enemyState } = useContext(EnemyContext);
   const [axie, setAxie] = useState(null);
   // const [totalDamage, setTotalDamage] = useState(0);
 
   // useEffect(() => {
-  //   const values = axieState.damageCalculator.usedCards;
+  //   const values = enemyState.damageCalculator.usedCards;
   //   setTotalDamage(
   //     Object.values(values).reduce((sum, allie) => sum + allie.total, 0)
   //   );
-  // }, [axieState]);
+  // }, [enemyState]);
 
   const {
     enemies: { enemyOne, enemyTwo, enemyThree },
-  } = axieState;
+  } = enemyState;
 
   useEffect(() => {
     if (position === "front") {
@@ -35,7 +35,7 @@ export const AxieBoxEnemy = ({ position }) => {
     <div
       className="axie-box"
       style={
-        axieState.focus && axieState.focus.id === axie.id
+        enemyState.focus && enemyState.focus.id === axie.id
           ? { backgroundColor: "#3D435B" }
           : { backgroundColor: "#242735" }
       }
@@ -43,7 +43,7 @@ export const AxieBoxEnemy = ({ position }) => {
       {/* <div */}
       {/*   className="total-damage" */}
       {/*   style={ */}
-      {/*     axieState.focus && axieState.focus.id === axie.id */}
+      {/*     enemyState.focus && enemyState.focus.id === axie.id */}
       {/*       ? { display: "flex" } */}
       {/*       : { display: "none" } */}
       {/*   } */}

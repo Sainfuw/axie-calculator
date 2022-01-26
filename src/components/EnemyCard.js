@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AxieContext } from "../context/AxieContext";
+import { EnemyContext } from "../context/EnemyContext";
 
 export const EnemyCard = ({ position, card }) => {
-  const { axieState } = useContext(AxieContext);
+  const { enemyState } = useContext(EnemyContext);
   const [axie, setAxie] = useState({});
   const [cardImage, setCardImage] = useState("");
   const [cardName, setCardName] = useState("");
@@ -10,7 +10,7 @@ export const EnemyCard = ({ position, card }) => {
 
   const {
     enemies: { enemyOne, enemyTwo, enemyThree },
-  } = axieState;
+  } = enemyState;
 
   useEffect(() => {
     if (position === "front") {

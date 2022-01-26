@@ -1,5 +1,7 @@
 import React from "react";
 import { AxieProvider } from "./context/AxieContext";
+import { EnemyProvider } from "./context/EnemyContext";
+import { DamageCalculatorProvider } from "./context/DamageCalculatorContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -8,7 +10,13 @@ import { Main } from "./components/Main";
 import { HistoryRight } from "./components/HistoryRight";
 
 const AppState = ({ children }) => {
-  return <AxieProvider>{children}</AxieProvider>;
+  return (
+    <AxieProvider>
+      <EnemyProvider>
+        <DamageCalculatorProvider>{children}</DamageCalculatorProvider>
+      </EnemyProvider>
+    </AxieProvider>
+  );
 };
 
 const App = () => {
